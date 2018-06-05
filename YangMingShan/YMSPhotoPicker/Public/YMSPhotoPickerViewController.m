@@ -443,8 +443,16 @@ static const CGFloat YMSPhotoFetchScaleResizingRatio = 0.75;
     arrowDownImage = [arrowDownImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [albumButton setImage:arrowDownImage forState:UIControlStateNormal];
     [albumButton sizeToFit];
-    albumButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, albumButton.frame.size.width - (arrowDownImage.size.width) + 10, 0.0, 0.0);
-    albumButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, -arrowDownImage.size.width, 0.0, arrowDownImage.size.width + 10);
+    NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+    NSString *lang = [languages objectAtIndex:0];
+    if ([lang isEqualToString:@"ar"]) {
+        albumButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, albumButton.frame.size.width - (arrowDownImage.size.width));
+        albumButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, arrowDownImage.size.width + 10, 0.0, -arrowDownImage.size.width);
+    }
+    else {
+        albumButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, albumButton.frame.size.width - (arrowDownImage.size.width) + 10, 0.0, 0.0);
+        albumButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, -arrowDownImage.size.width, 0.0, arrowDownImage.size.width + 10);
+    }
     // width + 10 for the space between text and image
     albumButton.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(albumButton.bounds) + 10, CGRectGetHeight(albumButton.bounds));
 
